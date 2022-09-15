@@ -104,7 +104,7 @@ export const datas = {
     {
       label: "Dataset 1",
       data: [10, 65],
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
+      backgroundColor: "#4E59FF",
     },
   ],
 };
