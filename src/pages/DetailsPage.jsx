@@ -127,8 +127,8 @@ const DetailsPage = () => {
   }, [success, fetchBusinessResult]);
 
   return (
-    <div className="grid grid-cols-2 gap-6">
-      <div className="border border-gray-300 rounded-md p-8">
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="border border-gray-300 rounded-md p-8 ">
         <div className="mb-4">Chiffre d’affaire</div>
         <div className="relative h-[280px] w-full">
           <Bar options={options} data={datas} />

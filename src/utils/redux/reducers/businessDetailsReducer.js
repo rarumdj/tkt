@@ -7,7 +7,6 @@ import {
 const initialState = {
   loading: false,
   success: false,
-  data: [],
   error: "",
 };
 
@@ -28,7 +27,6 @@ const businessDetailsReducer = (state = initialState, action) => {
     case FETCH_BUSINESS_DETAILS_ERROR:
       return {
         loading: false,
-        data: [],
         error: action.payload,
       };
     default:
