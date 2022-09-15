@@ -6,6 +6,9 @@ import {
   FETCH_BUSINESS,
   FETCH_BUSINESS_SUCCESS,
   FETCH_BUSINESS_ERROR,
+  FETCH_BUSINESS_RESULTS,
+  FETCH_BUSINESS_RESULTS_SUCCESS,
+  FETCH_BUSINESS_RESULTS_ERROR,
 } from "../actionType";
 
 import store from "../store";
@@ -56,20 +59,20 @@ export const fetchBusinessResult = (code) => {
 
 export const fetchBusinessResultRequest = () => {
   return {
-    type: FETCH_BUSINESS_DETAILS,
+    type: FETCH_BUSINESS_RESULTS,
   };
 };
 
 export const fetchBusinessResultSuccess = (business) => {
   return {
-    type: FETCH_BUSINESS_DETAILS_SUCCESS,
+    type: FETCH_BUSINESS_RESULTS_SUCCESS,
     payload: business,
   };
 };
 
 export const fetchBusinessResultFailure = (error) => {
   return {
-    type: FETCH_BUSINESS_DETAILS_ERROR,
+    type: FETCH_BUSINESS_RESULTS_ERROR,
     payload: error,
   };
 };

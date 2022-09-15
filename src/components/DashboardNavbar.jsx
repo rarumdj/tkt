@@ -8,16 +8,10 @@ import { ReactComponent as BackButton } from "../assets/icons/backbutton.svg";
 import { useSelector } from "react-redux";
 import cs from "classnames";
 const DashboardNavbar = ({ links }) => {
-  const [click, setClick] = useState(false);
-
-  const handleClick = () => {
-    setClick(!click);
-  };
-
+  const navigate = useNavigate();
   const { loading, error, data, success } = useSelector(
     (state) => state.business
   );
-
   const listBusiness = () => (
     <>
       <div className="z-50 my-auto">
@@ -26,13 +20,12 @@ const DashboardNavbar = ({ links }) => {
         </h1>
       </div>
       <div>
-        <button
+        <div
           className={cs(
             "z-50 mt-4 right-0 md:hidden block -translate-y-4 -translate-x-8 absolute ml-auto"
-          )}
-          onClick={handleClick}>
+          )}>
           <Hambugger className="object-scale-down md:hidden block md:w-full w-20" />
-        </button>
+        </div>
 
         <div className="md:mt-0 mt-10">
           <Logo className="object-scale-down md:hidden block md:w-full w-12 -translate-y-5" />
@@ -50,35 +43,39 @@ const DashboardNavbar = ({ links }) => {
   const detailsPage = () => (
     <>
       <div className="z-50 my-auto py-6 md:block hidden">
-        <button
+        <div
           className={cs(
             "z-50 mt-4 left-0 block -translate-y-5  absolute ml-auto"
-          )}
-          onClick={handleClick}>
-          <BackButton className="object-scale-down w-20" />
-        </button>
+          )}>
+          <BackButton
+            className="object-scale-down w-20"
+            onClick={() => navigate("/")}
+          />
+        </div>
         <div className="ml-10">
           <h1 className="xl:text-2xl lg:text-xl text-lg block font-medium">
-            Abbott and Sons
+            {data?.name}
           </h1>
-          <p>n° Siren 113996185</p>
+          <p>N° SIREN {data?.siren}</p>
         </div>
       </div>
       <div className="md:hidden block">
-        <button
+        <div
           className={cs(
             "z-50 mt-4 left-0 md:hidden block -translate-y-4  absolute ml-auto"
-          )}
-          onClick={handleClick}>
-          <BackButton className="object-scale-down w-20" />
-        </button>
+          )}>
+          <BackButton
+            className="object-scale-down w-20"
+            onClick={() => navigate("/")}
+          />
+        </div>
 
         <div className="ml-14 md:mt-0 mt-2">
           <div>
-            <h1 className="xl:text-2xl lg:text-xl text-lg block md:hidden font-medium">
-              Abbott and Sons
+            <h1 className="xl:text-2xl lg:text-xl text-lg block font-medium">
+              {data?.name}
             </h1>
-            <p>n° Siren 113996185</p>
+            <p>N° SIREN {data?.siren}</p>
           </div>
         </div>
       </div>
