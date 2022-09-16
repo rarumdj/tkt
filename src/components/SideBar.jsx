@@ -8,9 +8,9 @@ import { ReactComponent as Logo } from "../assets/icons/Logo.svg";
 import { avatar } from "../assets/images";
 
 const isActiveStyle =
-  "flex items-center px-10 gap-3 md:text-base text-sm  bg-indigo-200 py-4 rounded-sm text-indigo-600 transition-all duration-200 easy-in-out";
+  "flex items-center px-3 gap-3 md:text-base text-sm  bg-indigo-200 py-4 rounded-sm text-indigo-600 transition-all duration-200 easy-in-out";
 const isNotActiveStyle =
-  "flex items-center px-10 gap-3 md:text-base text-sm py-3 text-black hover:text-indigo-600 transition-all duration-200 easy-in-out";
+  "flex items-center px-3 gap-3 md:text-base text-sm py-3 text-black hover:text-indigo-600 transition-all duration-200 easy-in-out";
 
 const SideBar = ({ links }) => {
   const { pathname } = useLocation();
@@ -24,12 +24,12 @@ const SideBar = ({ links }) => {
           <Logo className="object-scale-down md:w-full w-20" />
         </Link>
         <div className="flex justify-center h-full">
-          <div className="flex flex-col w-full md:pt-6 pt-10 gap-1 whitespace-nowrap px-4">
+          <div className="flex flex-col w-full md:pt-6 pt-10 gap-1 whitespace-nowrap md:px-4">
             <NavLink
               to="/"
               className={cs(
-                { [isActiveStyle]: pathname.includes("/") },
-                { [isNotActiveStyle]: !pathname.includes("/") }
+                { [isActiveStyle]: pathname === "/" },
+                { [isNotActiveStyle]: pathname !== "/" }
               )}>
               <DashboardIcon className="text-indigo-600" />
               Dashboard
@@ -54,7 +54,7 @@ const SideBar = ({ links }) => {
             </NavLink>
           </div>
         </div>
-        <div className="mt-auto mx-auto mb-10">
+        <div className="mt-auto md:mx-auto mb-10">
           <ul className="flex flex-row space-x-4 items-center md:text-base text-sm">
             <li className="flex items-center justify-center space-x-2">
               <img

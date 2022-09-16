@@ -15,8 +15,7 @@ const ItemList = ({ header, lists }) => {
       {lists.map((item, index) => (
         <div
           key={index}
-          onClick={() => history.push(`business-details/${item.id}`)}
-          className="border rounded-md border-gray-200 p-6 grid grid-cols-3 gap-4 items-center cursor-pointer">
+          className="border rounded-md hover:border hover:border-indigo-500 hover:bg-gray-50 border-gray-200 p-6 grid grid-cols-3 gap-4 items-center cursor-pointer">
           <h4>{item.name}</h4>
           <h4>{item.siren}</h4>
           <Button
