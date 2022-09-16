@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
+  BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title,
+  Tooltip
 } from "chart.js";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useActions } from "../utils/redux/useAction";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import {
+  getBusinessDetialsAction,
+  getBusinessResultsAction
+} from "../utils/redux-saga/actions/businessActions";
+import {
+  RESET_BLOCK_BUSINESS
+} from "../utils/redux-saga/reducers/businessReducer";
 
 ChartJS.register(
   CategoryScale,
@@ -103,25 +103,29 @@ const DetailsPage = () => {
   const { id } = useParams();
   const [data2016, setData2016] = useState();
   const [data2017, setData2017] = useState();
+  const dispatch = useDispatch();
 
-  const { fetchBusiness, fetchBusinessResult } = useActions();
-
-  const { loading, error, data, success } = useSelector(
-    (state) => state.business
-  );
-  const { data: businessResult } = useSelector((state) => state.businessResult);
-  useEffect(() => {
-    if (id) fetchBusiness(id);
-  }, [fetchBusiness, id]);
+  const {
+    getBusinessDetails: { data, success },
+    getBusinessResults: { data: businessResult },
+  } = useSelector(({ business }) => business);
 
   useEffect(() => {
-    if (data && !data2017) return fetchBusinessResult(data.results[0]);
-  }, [fetchBusinessResult, data, data2017]);
+    if (id) dispatch(getBusinessDetialsAction(id));
+    return () => {
+      dispatch({ type: RESET_BLOCK_BUSINESS, blockType: "getBusinessDetails" });
+    };
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (success && !data2017)
+      dispatch(getBusinessResultsAction(data?.results[0]));
+  }, [dispatch, data, success, data2017]);
 
   useEffect(() => {
     if (businessResult && data2017 && !data2016)
-      return fetchBusinessResult(data.results[1]);
-  }, [fetchBusinessResult, data, data2017, data2016, businessResult]);
+      dispatch(getBusinessResultsAction(data?.results[1]));
+  }, [dispatch, data, data2017, data2016, businessResult]);
 
   useEffect(() => {
     if (businessResult && !data2017) setData2017(businessResult);
@@ -133,11 +137,11 @@ const DetailsPage = () => {
         setData2016(businessResult);
       }, 600);
   }, [data2017, data2016, businessResult]);
+
   const cadata = {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
         data: [data2016?.ca, data2017?.ca],
         backgroundColor: "#4E59FF",
       },
@@ -148,7 +152,6 @@ const DetailsPage = () => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
         data: [data2016?.ebitda, data2017?.ebitda],
         backgroundColor: "#4E59FF",
       },
@@ -159,7 +162,6 @@ const DetailsPage = () => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
         data: [data2016?.loss, data2017?.loss],
         backgroundColor: "#4E59FF",
       },
@@ -170,12 +172,12 @@ const DetailsPage = () => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
         data: [data2016?.margin, data2017?.margin],
         backgroundColor: "#4E59FF",
       },
     ],
   };
+
   if (!data2016 || !data2017)
     return (
       <div className="h-screen w-full flex">

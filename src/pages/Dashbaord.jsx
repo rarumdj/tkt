@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ItemList from "../components/ItemList";
-import { useActions } from "../utils/redux/useAction";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getBusinessAction } from "../utils/redux-saga/actions/businessActions";
 const header = ["COMPANY", "N° SIREN", "CATEGORY"];
 const lists = [
   {
@@ -30,36 +30,38 @@ const lists = [
   },
 ];
 const Dashbaord = () => {
-  const { fetchBusinessList } = useActions();
+  const dispatch = useDispatch();
 
-  const { loading, error, data } = useSelector((state) => state.listBuisness);
+  const {
+    getBusiness: { loading, data },
+  } = useSelector(({ business }) => business);
 
   useEffect(() => {
-    fetchBusinessList();
-  }, [fetchBusinessList]);
-
-
+    dispatch(getBusinessAction());
+  }, [dispatch]);
   return (
     <div className="w-full">
       <div className="grid md:grid-cols-2 gap-6 md:w-8/12">
         <select
           id="countries"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <option selected>Sector *</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="FR">France</option>
-          <option value="DE">Germany</option>
+          {data?.map((item, i) => (
+            <option key={i} value={item.sector}>
+              {item.sector}
+            </option>
+          ))}
         </select>
 
         <select
           id="countries"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
           <option selected>Company *</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="FR">France</option>
-          <option value="DE">Germany</option>
+          {data?.map((item, i) => (
+            <option key={i} value={item.name}>
+              {item.name}
+            </option>
+          ))}
         </select>
       </div>
       {loading && (

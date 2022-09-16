@@ -1,12 +1,11 @@
-import { Icon } from "@iconify/react";
-import React from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { avatar } from "../assets/images";
 import cs from "classnames";
-import { ReactComponent as DashboardIcon } from "../assets/icons/dashboard.svg";
-import { ReactComponent as Chat } from "../assets/icons/Chat.svg";
+import React from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { ReactComponent as Bell } from "../assets/icons/Bell.svg";
+import { ReactComponent as Chat } from "../assets/icons/Chat.svg";
+import { ReactComponent as DashboardIcon } from "../assets/icons/dashboard.svg";
 import { ReactComponent as Logo } from "../assets/icons/Logo.svg";
+import { avatar } from "../assets/images";
 
 const isActiveStyle =
   "flex items-center px-10 gap-3 md:text-base text-sm  bg-indigo-200 py-4 rounded-sm text-indigo-600 transition-all duration-200 easy-in-out";
@@ -16,14 +15,8 @@ const isNotActiveStyle =
 const SideBar = ({ links }) => {
   const { pathname } = useLocation();
 
-  const navigate = useNavigate();
-
-  const onLogout = () => {
-    navigate("/login");
-  };
-
   return (
-    <div className="flex flex-col justify-between bg-gray-100 h-full  overflow-y-scroll min-w-[230px] hide-scrollbar">
+    <div className="flex flex-col justify-between bg-gray-50 h-full  overflow-y-scroll min-w-[230px] hide-scrollbar">
       <div className="flex flex-col h-full">
         <Link
           to="/"
@@ -34,25 +27,28 @@ const SideBar = ({ links }) => {
           <div className="flex flex-col w-full md:pt-6 pt-10 gap-1 whitespace-nowrap px-4">
             <NavLink
               to="/"
-              className={({ isActive }) =>
-                isActive ? isActiveStyle : isNotActiveStyle
-              }>
+              className={cs(
+                { [isActiveStyle]: pathname.includes("/") },
+                { [isNotActiveStyle]: !pathname.includes("/") }
+              )}>
               <DashboardIcon className="text-indigo-600" />
               Dashboard
             </NavLink>
             <NavLink
               to="/lorem"
-              className={({ isActive }) =>
-                isActive ? isActiveStyle : isNotActiveStyle
-              }>
+              className={cs(
+                { [isActiveStyle]: pathname.includes("/lorem") },
+                { [isNotActiveStyle]: !pathname.includes("/lorem") }
+              )}>
               <Bell className="text-indigo-600" />
               lorem ipsum
             </NavLink>
             <NavLink
               to="/ipsum"
-              className={({ isActive }) =>
-                isActive ? isActiveStyle : isNotActiveStyle
-              }>
+              className={cs(
+                { [isActiveStyle]: pathname.includes("/ipsum") },
+                { [isNotActiveStyle]: !pathname.includes("/ipsum") }
+              )}>
               <Chat className="text-indigo-600" />
               lorem ipsum
             </NavLink>

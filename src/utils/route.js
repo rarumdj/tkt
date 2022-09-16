@@ -8,5 +8,5 @@ const routes = [
 ];
 
 export const PageRoutes = routes.map(({ path, element }, key) => (
-  <Route path={path} element={element} key={key} />
+  <Route exact path={path} element={element} key={key} />
 ));

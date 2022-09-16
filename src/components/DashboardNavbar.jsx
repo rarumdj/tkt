@@ -1,17 +1,19 @@
-import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import SideBar from "./SideBar";
-import { ReactComponent as Logo } from "../assets/icons/Logo.svg";
-import { ReactComponent as Hambugger } from "../assets/icons/hambugger.svg";
-import { ReactComponent as BackButton } from "../assets/icons/backbutton.svg";
-import { useSelector } from "react-redux";
 import cs from "classnames";
-const DashboardNavbar = ({ links }) => {
-  const navigate = useNavigate();
-  const { loading, error, data, success } = useSelector(
-    (state) => state.business
-  );
+import { useSelector } from "react-redux";
+import { useHistory, useNavigate } from "react-router-dom";
+import { ReactComponent as BackButton } from "../assets/icons/backbutton.svg";
+import { ReactComponent as Hambugger } from "../assets/icons/hambugger.svg";
+import { ReactComponent as Logo } from "../assets/icons/Logo.svg";
+const DashboardNavbar = () => {
+  const history = useHistory();
+
+  //   const navigate = useNavigate();
+  //   const { loading, error, data, success } = useSelector(
+  //     (state) => state.business
+  //   );
+  const {
+    getBusinessDetails: { loading, data },
+  } = useSelector(({ business }) => business);
   const listBusiness = () => (
     <>
       <div className="z-50 my-auto">
@@ -48,8 +50,8 @@ const DashboardNavbar = ({ links }) => {
             "z-50 mt-4 left-0 block -translate-y-5  absolute ml-auto"
           )}>
           <BackButton
-            className="object-scale-down w-20"
-            onClick={() => navigate("/")}
+            className="object-scale-down w-20 cursor-pointer"
+            onClick={() => history.push("/")}
           />
         </div>
         <div className="ml-10">
@@ -65,8 +67,8 @@ const DashboardNavbar = ({ links }) => {
             "z-50 mt-4 left-0 md:hidden block -translate-y-4  absolute ml-auto"
           )}>
           <BackButton
-            className="object-scale-down w-20"
-            onClick={() => navigate("/")}
+            className="object-scale-down w-20 cursor-pointer"
+            onClick={() => history.push("/")}
           />
         </div>
 
@@ -83,7 +85,7 @@ const DashboardNavbar = ({ links }) => {
   );
 
   return (
-    <header className="bg-gray-50 py-4 pr-6 sticky md:py-4 md:pr-16 md:pl-12 pl-6 top-0 left-0 right-0 z-30 flex justify-center">
+    <header className="md:bg-white bg-gray-50 py-4 pr-6 sticky md:py-4 md:pr-16 md:pl-12 pl-6 top-0 left-0 right-0 z-30 flex justify-center">
       <nav className="flex md:flex-row flex-col w-screen max-w-[110rem] justify-between">
         {data ? detailsPage() : listBusiness()}
       </nav>

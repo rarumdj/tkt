@@ -1,9 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 
 const ItemList = ({ header, lists }) => {
-  const navigate = useNavigate();
+  const history = useHistory();
   return (
     <div className="space-y-4 mt-14">
       <div className="grid grid-cols-3 gap-4 px-6">
@@ -14,13 +15,13 @@ const ItemList = ({ header, lists }) => {
       {lists.map((item, index) => (
         <div
           key={index}
-          onClick={() => navigate(`details/${item.id}`)}
+          onClick={() => history.push(`business-details/${item.id}`)}
           className="border rounded-md border-gray-200 p-6 grid grid-cols-3 gap-4 items-center cursor-pointer">
           <h4>{item.name}</h4>
           <h4>{item.siren}</h4>
           <Button
             className="w-fit"
-            onClick={() => navigate(`details/${item.id}`)}>
+            onClick={() => history.push(`business-details/${item.id}`)}>
             {item.sector}
           </Button>
         </div>

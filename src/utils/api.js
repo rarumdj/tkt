@@ -1,13 +1,8 @@
 import axios from "axios";
+const baseURL = "https://test.wertkt.com/api/";
 
-export const getBusiness = () => {
-  return axios.get("https://test.wertkt.com/api/biz/");
-};
+const Axios = axios.create({
+  baseURL,
+});
 
-export const getBusinessDetails = (code) => {
-  return axios.get(`https://test.wertkt.com/api/biz/${code}`);
-};
-
-export const getBusinessResult = (code) => {
-  return axios.get(`https://test.wertkt.com/api/result/${code}`);
-};
+export { Axios };
