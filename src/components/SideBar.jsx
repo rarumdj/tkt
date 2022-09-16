@@ -28,8 +28,8 @@ const SideBar = ({ links }) => {
             <NavLink
               to="/"
               className={cs(
-                { [isActiveStyle]: pathname === "/" },
-                { [isNotActiveStyle]: pathname !== "/" }
+                { [isActiveStyle]: pathname.includes("/") },
+                { [isNotActiveStyle]: !pathname.includes("/") }
               )}>
               <DashboardIcon className="text-indigo-600" />
               Dashboard
